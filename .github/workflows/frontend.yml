@@ -10,6 +10,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,6 +30,9 @@ jobs:
       - name: Build
         run: npm run build -- --configuration production --base-href /moviews/
         working-directory: ui
+
+      - name: Create 404.html
+        run: cp ui/dist/movie-tracker-ui/browser/index.html ui/dist/movie-tracker-ui/browser/404.html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
